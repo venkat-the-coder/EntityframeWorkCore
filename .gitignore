@@ -1,0 +1,31 @@
+# Build and binary output
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+
+# Debug & publish logs
+*.log
+
+# Rider/VSCode/JetBrains files (optional IDE settings)
+.idea/
+.vscode/
+
+# Dotnet-specific
+*.db
+*.pdb
+*.dll
+*.exe
+
+# User secrets and config transforms
+secrets.json
+appsettings.Development.json
+appsettings.*.json
+
+# OS-specific
+Thumbs.db
+.DS_Store
