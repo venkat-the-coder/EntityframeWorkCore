@@ -83,7 +83,6 @@ using (var dbContext = new DbContextClass())
     }
 
 
-
     //lazy laoding concept not implementation
 
     //setup
@@ -92,6 +91,20 @@ using (var dbContext = new DbContextClass())
 
     //var employee = dbContext.Employees.First();
     //var managerName = employee.Manager.Name;
+
+
+
+    var employees = dbContext.Employees
+        .AsNoTracking()
+        .Include(c => c.Manager)
+        .Where(e => e.Name.Contains("M"))
+        .ToList();
+
+    foreach (var emp in employees)
+    {
+        Console.WriteLine($"{emp.Name}: {emp.Manager.Name}");
+    }
+
 
 }
 
