@@ -111,8 +111,8 @@ using (var dbContext = new DbContextClass())
 
 
 // new version of c# using pattern
-
-await using var _dbContext = new DbContextClass();
+using var _dbContext = new DbContextClass();
+using var transaction = _dbContext.Database.BeginTransactionAsync();
 
 if (_dbContext != null)
 {
@@ -128,6 +128,28 @@ if (_dbContext != null)
     var changedEmployee = await _dbContext.Employees.FirstOrDefaultAsync(employee => employee.Name == "valli");
     if (changedEmployee != null)
         Console.WriteLine($"Employee found and the name is : {changedEmployee.Name}");
+
+    try
+    {
+
+        var employeedsset = _dbContext.Employees.Single(x => x.Name == "valli");
+        employeedsset.Name = "valli new";
+
+        await _dbContext.SaveChangesAsync();
+
+        await transaction.Result.CommitAsync();
+
+    }
+    catch
+    {
+        await transaction.Result.RollbackAsync();
+    }
 }
+
+
+//transacitional ef core
+
+
+
 
 
