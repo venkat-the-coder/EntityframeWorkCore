@@ -111,8 +111,8 @@ using (var dbContext = new DbContextClass())
 
 
 // new version of c# using pattern
-using var _dbContext = new DbContextClass();
-using var transaction = _dbContext.Database.BeginTransactionAsync();
+await using var _dbContext = new DbContextClass();
+await using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
 if (_dbContext != null)
 {
@@ -137,12 +137,12 @@ if (_dbContext != null)
 
         await _dbContext.SaveChangesAsync();
 
-        await transaction.Result.CommitAsync();
+        await transaction.CommitAsync();
 
     }
     catch
     {
-        await transaction.Result.RollbackAsync();
+        await transaction.RollbackAsync();
     }
 }
 
