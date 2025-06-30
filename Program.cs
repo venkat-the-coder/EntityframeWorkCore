@@ -73,7 +73,7 @@ using (var dbContext = new DbContextClass())
 
         int index = 0;
 
-        Console.WriteLine($"Below are the mployee list of : {manager2.Name}");
+        Console.WriteLine($"Below are the employee list of : {manager2.Name}");
 
         foreach (var emp in manager2.Employees)
         {
@@ -94,3 +94,27 @@ using (var dbContext = new DbContextClass())
     //var managerName = employee.Manager.Name;
 
 }
+
+
+
+// new version of c# using pattern
+
+await using var _dbContext = new DbContextClass();
+
+if (_dbContext != null)
+{
+    var employee = await _dbContext.Employees.FirstOrDefaultAsync(employee => employee.Name == "kumar");
+
+
+    if (employee != null)
+    {
+        employee.Name = "valli";
+        await _dbContext.SaveChangesAsync();
+    }
+
+    var changedEmployee = await _dbContext.Employees.FirstOrDefaultAsync(employee => employee.Name == "valli");
+    if (changedEmployee != null)
+        Console.WriteLine($"Employee found and the name is : {changedEmployee.Name}");
+}
+
+
